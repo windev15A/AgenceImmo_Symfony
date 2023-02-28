@@ -19,9 +19,18 @@
         <li class="mr-6">
             <a class="text-blue-500 hover:text-blue-800" href="#">Mes favoris</a>
         </li>
+        {% if app.user %}
+            
         <li class="mr-6">
-            <a class="text-blue-500 hover:text-blue-800" href="#">Mon compte</a>
+            <a class="text-blue-500 hover:text-blue-800 mx-3" href="{{ path('app_logout') }}">Mon compte</a>
+            <a class="text-blue-500 hover:text-blue-800" href="{{ path('app_logout') }}">Déconnexion</a>
         </li>
+        {% else %}
+            <li class="mr-6">
+                <a class="text-blue-500 hover:text-blue-800 mx-3" href="{{ path('app_login') }}">Connexion</a>
+                <a class="text-blue-500 hover:text-blue-800" href="{{ path('app_register') }}">M'inscrire</a>
+            </li>
+        {% endif %}
 
     </ul>
 

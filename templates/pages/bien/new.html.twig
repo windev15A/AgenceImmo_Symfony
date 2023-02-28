@@ -4,28 +4,61 @@
 
 
 {% block body %}
-    <h1>Création d'un nouveau bien</h1>
+    <h1 class="font-bold text-3xl mb-10 text-center">Création d'un nouveau bien2</h1>
+    <div class="w-3/4 mx-auto shadow-2xl p-8 rounded-xl">
 
-    {{ form_start(form) }}
-    <div class="block">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
-        <div class="flex justify-around my-5">
-            {{ form_label(form.nb_pieces) }}
-            {{ form_widget(form.nb_pieces) }}
-        </div>
-        <div class=" my-5">
-            {{ form_label(form.autres) }}
-            {{ form_widget(form.autres) }}
-        </div>
-        {{ form_label(form.adresse) }}
-        {{ form_widget(form.adresse) }}
+        {{ form_start(form) }}
+        <div class="flex justify-between items-center">
+            <div class="w-1/2 mx-2">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+                {{ form_errors(form.description) }}
+            </div>
+            <div class="block w-1/2 mx-2">
+                {{ form_label(form.nb_pieces) }}
+                {{ form_widget(form.nb_pieces) }}
+                {{ form_errors(form.nb_pieces) }}
 
-        <div class="mt-14 w-1/2">
-        {{ form_widget(form.save) }}
+            </div>
         </div>
+        <div class="block my-5">
+            <div class=" my-5">
+                {{ form_label(form.autres) }}
+                {{ form_widget(form.autres) }}
+                {{ form_errors(form.autres) }}
+
+            </div>
+
+            {{ form_label(form.adresse) }}
+            {{ form_widget(form.adresse) }}
+            {{ form_errors(form.adresse) }}
+
+        </div>
+        <div class="flex justify-between items-center">
+            <div class="w-1/2 mx-2">
+                {{ form_label(form.codePostal) }}
+                {{ form_widget(form.codePostal) }}
+                {{ form_errors(form.codePostal) }}
+
+            </div>
+            <div class="block w-1/2 mx-2">
+                {{ form_label(form.ville) }}
+                {{ form_widget(form.ville) }}
+                {{ form_errors(form.ville) }}
+            </div>
+        </div>
+        <div class="mt-5">
+            {{ form_label(form.type) }}
+            {{ form_widget(form.type) }}
+        </div>
+        <div class="mt-5">
+            {{ form_widget(form.images) }}
+        </div>
+        <div class="mt-8 w-1/2">
+            {{ form_widget(form.save) }}
+        </div>
+        {{ form_end(form) }}
     </div>
-    {{ form_end(form) }}
 
 
 {% endblock %}

@@ -1,31 +1,105 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Agence Oti Nouveau bien {% endblock %}
+{% block title %}Agence Oti modifier un bien {% endblock %}
 
 
 {% block body %}
-    <h1>Modification d'un bien</h1>
+    <h1 class="font-bold text-3xl mb-10 text-center">Edition d'un bien</h1>
+    <div class="w-3/4 mx-auto shadow-2xl p-8 rounded-xl">
 
-    {{ form_start(form) }}
-    <div class="block">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
-        <div class="flex justify-around my-5">
-            {{ form_label(form.nb_pieces) }}
-            {{ form_widget(form.nb_pieces) }}
+        {{ form_start(form) }}
+        <div class="flex justify-between items-center">
+            <div class="w-1/2 mx-2">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <div class="block w-1/2 mx-2">
+                {{ form_label(form.nb_pieces) }}
+                {{ form_widget(form.nb_pieces) }}
+            </div>
         </div>
-        <div class=" my-5">
-            {{ form_label(form.autres) }}
-            {{ form_widget(form.autres) }}
-        </div>
-        {{ form_label(form.adresse) }}
-        {{ form_widget(form.adresse) }}
+        <div class="block my-5">
+            <div class=" my-5">
+                {{ form_label(form.autres) }}
+                {{ form_widget(form.autres) }}
+            </div>
 
-        <div class="mt-14 w-1/2">
-        {{ form_widget(form.save) }}
+            {{ form_label(form.adresse) }}
+            {{ form_widget(form.adresse) }}
+
+        </div>
+        <div class="flex justify-between items-center">
+            <div class="w-1/2 mx-2">
+                {{ form_label(form.codePostal) }}
+                {{ form_widget(form.codePostal) }}
+            </div>
+            <div class="block w-1/2 mx-2">
+                {{ form_label(form.ville) }}
+                {{ form_widget(form.ville) }}
+            </div>
+        </div>
+        <div class="mt-4 w-1/2">
+            {{ form_widget(form.type) }}
+        </div>
+        <div class="mt-5">
+            {{ form_widget(form.images) }}
+        </div>
+        <div class="mt-4 w-1/2">
+            {{ form_widget(form.save) }}
+        </div>
+        {{ form_end(form) }}
+
+        <div>
+            <h1>Les images</h1>
+            <div class="grid grid-cols-4 gap-4 ">
+                {% for image in bien.images %}
+                    <div class="relative">
+                        <a href="{{ path('image.delete', {id: image.id}) }}" data-delete class="bg-red-700 text-white w-4 h-6 absolute top-0 right-2">X</a>
+                        <img src="{{ asset('/uploads/'~image.name) }}" alt="{{ image.name }}" class="w-full h-full">
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    window.onload = () => {
+        // Gestion des boutons "Supprimer"
+        let links = document.querySelectorAll("[data-delete]")
+
+        // On boucle sur links
+        for(link of links){
+            // On écoute le clic
+            link.addEventListener("click", function(e){
+                // On empêche la navigation
+                e.preventDefault()
+
+                // On demande confirmation
+                if(confirm("Voulez-vous supprimer cette image ?")){
+                    // On envoie une requête Ajax vers le href du lien avec la méthode DELETE
+                    fetch(this.getAttribute("href"), {
+                        method: "DELETE",
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({"_token": this.dataset.token})
+                    }).then(
+                        // On récupère la réponse en JSON
+                        response => response.json()
+                    ).then(data => {
+                        if(data.success)
+                            this.parentElement.remove()
+                        else
+                            alert(data.error)
+                    }).catch(e => alert(e))
+                }
+            })
+        }
+    }
 
 
+</script>
 {% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agence Oti - index!{% endblock %}
+
+{% block body %}
+    <div class="bg-gray-100 shadow-2xl p-4">
+        <div class="flex justify-between items-center">
+            <h1 class="my-5 text-4xl font-bold text-center">Liste des biens </h1>
+            <a href="{{ path('bien.new') }}"
+               class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
+                Nouveau
+            </a>
+        </div>
+        {% for message in app.flashes('success') %}
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                 role="alert">
+                <span class="font-medium">{{ message }}</span>
+            </div>
+        {% endfor %}
+
+
+        {% if biens %}
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            #
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Libelle
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Nombe de chambre
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Adresse
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for bien in biens %}
+                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ bien.id }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ bien.description }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ bien.nbPieces }}
+                            </td>
+                            <td class="px-6 py-4">
+                               {{ bien.adresse ~ ' ' ~ bien.codePostal ~' ' ~ bien.ville }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ path('bien.edit', {id: bien.id}) }}"
+                                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <a href="{{ path('bien.supprimer', {id: bien.id }) }}"
+                                   class="font-medium mx-5 text-red-600 dark:text-red-500 hover:underline">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        {% else %}
+            <p>Pas de données à afficher</p>
+
+        {% endif %}
+
+
+        <div class="navigation mt-4">
+            {{ knp_pagination_render(biens) }}
+        </div>
+    </div>
+
+
+{% endblock %}
