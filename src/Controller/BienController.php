@@ -9,13 +9,12 @@ use App\Repository\BienRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- *
- */
+#[Route('/admin')]
 class BienController extends AbstractController
 {
     /**
@@ -73,8 +72,6 @@ class BienController extends AbstractController
                 $img = new Images();
                 $img->setName($file)
                     ->setPathImg($this->getParameter('images_directory'));
-                $manager->persist($img);
-                $manager->flush();
                 $bien->addImage($img);
             }
 
@@ -89,11 +86,18 @@ class BienController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Bien $bien
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('bien/{id}/edit', name: 'bien.edit', methods: ['POST', 'GET'])]
     public function edit(
         Bien                   $bien,
         Request                $request,
-        EntityManagerInterface $manager): Response
+        EntityManagerInterface $manager
+    ): Response
     {
         $form = $this->createForm(BienType::class, $bien);
 
@@ -114,8 +118,6 @@ class BienController extends AbstractController
                 $img = new Images();
                 $img->setName($file)
                     ->setPathImg($this->getParameter('images_directory'));
-                $manager->persist($img);
-                $manager->flush();
                 $bien->addImage($img);
             }
             $manager->persist($bien);
@@ -129,9 +131,14 @@ class BienController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $manager
+     * @param Bien $bien
+     * @param ImageController $imgctrl
+     * @return RedirectResponse|void
+     */
     #[Route('bien/{id}/destroy', name: 'bien.supprimer', methods: ['GET'])]
     public function destroy(
-        BienRepository         $repository,
         EntityManagerInterface $manager,
         Bien                   $bien,
         ImageController        $imgctrl

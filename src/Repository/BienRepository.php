@@ -67,7 +67,7 @@ class BienRepository extends ServiceEntityRepository
     public function getData($limit = 5)
     {
         return $this->createQueryBuilder('b')
-            ->orderBy('b.created_at', 'DESC')
+            ->orderBy('b.created_at', 'desc')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();

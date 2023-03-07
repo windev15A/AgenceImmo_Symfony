@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BienRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -42,11 +43,11 @@ class Bien
     #[Assert\NotBlank]
     private ?string $ville = null;
 
-    #[ORM\ManyToOne(inversedBy: 'biens')]
-    private ?Type $type = null;
+    #[ORM\ManyToOne(targetEntity: Type::class, inversedBy: 'biens')]
+    private $type;
 
-    #[ORM\OneToMany(mappedBy: 'Bien', targetEntity: Images::class)]
-    private Collection $images;
+    #[ORM\OneToMany(mappedBy: 'Bien', targetEntity: Images::class, cascade: ["persist"])]
+    private $images;
 
     #[ORM\Column(nullable: true)]
     private ?int $surface = null;
@@ -57,6 +58,7 @@ class Bien
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->setCreatedAt(new DateTimeImmutable());
     }
 
 
@@ -206,4 +208,8 @@ class Bien
     }
 
 
+    public function __toString(): string
+    {
+        return $this->images;
+    }
 }

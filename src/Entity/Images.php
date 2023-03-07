@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: ImagesRepository::class)]
 class Images
 {
@@ -20,7 +21,7 @@ class Images
     #[ORM\Column(length: 255)]
     private ?string $path_img = null;
 
-    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\ManyToOne(inversedBy: 'images', targetEntity: Bien::class)]
     private ?Bien $Bien = null;
 
     public function getId(): ?int
