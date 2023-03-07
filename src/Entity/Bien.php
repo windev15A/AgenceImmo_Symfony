@@ -48,6 +48,12 @@ class Bien
     #[ORM\OneToMany(mappedBy: 'Bien', targetEntity: Images::class)]
     private Collection $images;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $surface = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $created_at = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -171,6 +177,30 @@ class Bien
                 }
             }
         }
+
+        return $this;
+    }
+
+    public function getSurface(): ?int
+    {
+        return $this->surface;
+    }
+
+    public function setSurface(?int $surface): self
+    {
+        $this->surface = $surface;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

@@ -12,7 +12,7 @@
             <div class="w-1/2 mx-2">
                 {{ form_label(form.description) }}
                 {{ form_widget(form.description) }}
-                {{ form_errors(form.description) }}
+                <span class="text-red-700">{{ form_errors(form.description) }}</span>
             </div>
             <div class="block w-1/2 mx-2">
                 {{ form_label(form.nb_pieces) }}

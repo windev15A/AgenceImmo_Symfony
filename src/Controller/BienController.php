@@ -63,7 +63,7 @@ class BienController extends AbstractController
             $images = $form->get('images')->getData();
 
             foreach ($images as $image) {
-                $file = md5(uniqid()).'.'.$image->guessExtension();
+                $file = md5(uniqid()) . '.' . $image->guessExtension();
                 $image->move(
                     $this->getParameter('images_directory'),
                     $file
@@ -104,7 +104,7 @@ class BienController extends AbstractController
             $images = $form->get('images')->getData();
 
             foreach ($images as $image) {
-                $file = md5(uniqid()).'.'.$image->guessExtension();
+                $file = md5(uniqid()) . '.' . $image->guessExtension();
                 $image->move(
                     $this->getParameter('images_directory'),
                     $file
@@ -130,9 +130,18 @@ class BienController extends AbstractController
     }
 
     #[Route('bien/{id}/destroy', name: 'bien.supprimer', methods: ['GET'])]
-    public function destroy(BienRepository $repository, EntityManagerInterface $manager, Bien $bien)
+    public function destroy(
+        BienRepository         $repository,
+        EntityManagerInterface $manager,
+        Bien                   $bien,
+        ImageController        $imgctrl
+    )
     {
         try {
+            foreach ($bien->getImages() as $image) {
+                $bien->removeImage($image);
+                $imgctrl->delete($image, $manager);
+            }
 
             $manager->remove($bien);
             $manager->flush();

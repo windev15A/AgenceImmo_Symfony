@@ -63,4 +63,13 @@ class BienRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function getData($limit = 5)
+    {
+        return $this->createQueryBuilder('b')
+            ->orderBy('b.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }
