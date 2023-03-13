@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Adresse;
 use App\Entity\Bien;
+use App\Entity\Category;
 use App\Entity\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -77,6 +78,14 @@ class BienType extends AbstractType
                 ],
                 'class' => Type::class,
                 'choice_label' => 'libelle',
+
+            ])
+            ->add('category', EntityType::class,[
+                'attr' => [
+                    'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                ],
+                'class' => Category::class,
+                'choice_label' => 'label',
 
             ])
             ->add('images', FileType::class,[

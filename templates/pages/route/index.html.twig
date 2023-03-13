@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RouteController!{% endblock %}
+
+{% block body %}
+
+    <div class="w-2/3 m-auto shadow-2xl p-4">
+        {% for route in listRoutes %}
+            {% for toto in route|split(' ') %}
+                {{ toto }}
+            {% endfor %}
+            <br>
+        {% endfor %}
+    </div>
+
+{% endblock %}

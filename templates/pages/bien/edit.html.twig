@@ -38,8 +38,17 @@
                 {{ form_widget(form.ville) }}
             </div>
         </div>
-        <div class="mt-4 w-1/2">
-            {{ form_widget(form.type) }}
+        <div class="flex justify-between items-center mt-4">
+            <div class="w-1/2 mx-2">
+                {{ form_label(form.type) }}
+                {{ form_widget(form.type) }}
+                {{ form_errors(form.type) }}
+            </div>
+            <div class="w-1/2 mx-2">
+                {{ form_label(form.category, 'Catégorie') }}
+                {{ form_widget(form.category) }}
+                {{ form_errors(form.category) }}
+            </div>
         </div>
         <div class="mt-5">
             {{ form_widget(form.images) }}
@@ -54,7 +63,7 @@
             <div class="grid grid-cols-4 gap-4 ">
                 {% for image in bien.images %}
                     <div class="relative">
-                        <a href="{{ path('image.delete', {id: image.id}) }}" data-delete class="bg-red-700 text-white w-4 h-6 absolute top-0 right-2">X</a>
+                        <a href="{{ path('image.delete', {id: image.id}) }}" data-delete class="bg-red-700 text-white text-center w-6 h-6 rounded-full absolute top-0 right-0">X</a>
                         <img src="{{ asset('/uploads/'~image.name) }}" alt="{{ image.name }}" class="w-full h-full">
                     </div>
                 {% endfor %}
