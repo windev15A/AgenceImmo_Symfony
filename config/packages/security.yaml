@@ -32,7 +32,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: /logout, roles: IS_AUTHENTICATED_FULLY }
+         - { path: /bien/[0-9]+/like, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

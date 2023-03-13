@@ -55,6 +55,9 @@ class Bien
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $created_at = null;
 
+    #[ORM\ManyToOne(inversedBy: 'biens')]
+    private ?Category $category = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -211,5 +214,18 @@ class Bien
     public function __toString(): string
     {
         return $this->images;
+
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }

@@ -23,7 +23,7 @@ class BienController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/bien', name: 'app_bien')]
+    #[Route('', name: 'app_bien')]
     public function index(
         BienRepository     $repository,
         PaginatorInterface $paginator,
