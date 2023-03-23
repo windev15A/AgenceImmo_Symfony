@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OTI - Contact{% endblock %}
+
+{% block body %}
+    <div class="w-3/4 m-auto bg-red-100 p-5 rounded-xl shadow-2xl mt-5">
+        <h1 class="my-5 text-3xl font-semibold text-center text-gray-500">Formulaire de contact</h1>
+        <form method="post" action="{{ path('contact_send') }}">
+            <div class="grid gap-6 mb-5 md:grid-cols-2">
+                <div>
+                    <label for="first_name"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                    <input type="text" id="first_name"
+                           name="first_name"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Votre nom" required>
+                </div>
+                <div>
+                    <label for="last_name"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
+                    <input type="text" id="last_name"
+                           name="last_name"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Prénom" required>
+                </div>
+
+                <div class="">
+                    <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input type="text" id=""
+                           name="email"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="johon_doe@exemple.com" required>
+                </div>
+                <div>
+                    <label for="number_phone"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Téléphone</label>
+                    <input type="text" id="number_phone"
+                           name="phone_number"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Votre numéro de téléphone ">
+                </div>
+            </div>
+            <div class=" mt-3">
+
+                <label for="message"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message</label>
+                <textarea id="message" rows="4"
+                          name="message"
+                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="">Bonjour, Je souhaiterais avoir plus de renseignements sur ce bien et prendre rendez-vous pour le visiter.
+                </textarea>
+
+            </div>
+            <div class="flex items-center mb-4 mt-3">
+                <input id="rgbd" type="checkbox" value="contrat_rgbd"
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="rgbd" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 w-1/2">
+                    J’accepte que mes données soient transférées aux partenaires du réseau Orpi afin que ces derniers
+                    puissent m’adresser des communications par email et/ou sms.
+                </label>
+            </div>
+
+            <input type="hidden" name="token" value="{{ csrf_token('send_email') }}"/>
+            <button type="submit" id="btn_valid" disabled
+                    class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                Envoyer
+            </button>
+
+
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let cnd_rgbd = document.getElementById('rgbd')
+        let btn_valid = document.getElementById('btn_valid')
+        cnd_rgbd.addEventListener('change', function (){
+            btn_valid.disabled = !cnd_rgbd.checked;
+        })
+    </script>
+
+
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\FilterData;
 use App\Entity\Bien;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -71,5 +72,67 @@ class BienRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param FilterData $filter
+     * @return array
+     */
+    public function searchBien(FilterData $filter):array
+    {
+
+
+        try {
+            $query = $this->createQueryBuilder('b')
+                ->select("b", "t", "c")
+                ->join("b.category", "c")
+                ->join("b.type", "t");
+
+            if ($filter->q) {
+                $query = $query
+                    ->andWhere("b.description LIKE :q")
+                    ->orWhere("b.ville LIKE :q")
+                    ->orWhere("c.label LIKE :q")
+                    ->orWhere("t.libelle LIKE :q")
+                    ->setParameter("q", "%$filter->q%");
+            }
+            if ($filter->categories) {
+                $query = $query
+                    ->andWhere("c.id IN (:categories)")
+                    ->setParameter("categories", $filter->categories);
+            }
+            if ($filter->types) {
+                $query = $query
+                    ->andWhere("t.id IN (:types)")
+                    ->setParameter("types", $filter->types);
+            }
+            if ($filter->priceMin) {
+                $query = $query
+                    ->andWhere("b.price >= :min")
+                    ->setParameter('min', $filter->priceMin);
+            }
+            if ($filter->priceMax) {
+                $query = $query
+                    ->andWhere("b.price <= :max")
+                    ->setParameter('max', $filter->priceMax);
+            }
+            if ($filter->surfaceMin) {
+                $query = $query
+                    ->andWhere("b.surface >= :min")
+                    ->setParameter('min', $filter->surfaceMin);
+            }
+            if ($filter->surfaceMax) {
+                $query = $query
+                    ->andWhere("b.surface <= :max")
+                    ->setParameter('max', $filter->surfaceMax);
+            }
+
+            return $query
+                ->getQuery()
+                ->getResult();
+
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
     }
 }

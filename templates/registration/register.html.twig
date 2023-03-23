@@ -1,25 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Agence Oti - Inscription{% endblock %}
 
 {% block body %}
-    <div class="w-1/2 mx-auto mt-4">
+    <div class="md:w-1/2 mx-auto shadow-2xl py-6 px-4 mt-20 rounded border-1 border-green-500 bg-teal-400 relative">
 
-        <h1>Inscription</h1>
+        <div class="absolute w-full flex justify-center" style="top: -55px">
+            <svg class="h-24 w-24 text-gray-300 bg-green-400  rounded-full p-2" fill="none" stroke="currentColor"
+                 stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+
+        </div>
 
         {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.first_name) }}
-        {{ form_row(registrationForm.last_name) }}
+        <div class="relative">
+            <svg class="absolute top-7 left-1 flex items-center w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
+                 stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            {{ form_row(registrationForm.first_name, {
+                label: 'Nom'
+            }) }}
+        </div>
+
+        <div class="relative">
+            <svg class="absolute top-7 left-1 flex items-center w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
+                 stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            {{ form_row(registrationForm.last_name, {
+                label: 'Prénom'
+            }) }}
+        </div>
+        <div class="relative">
+            <svg aria-hidden="true" class="absolute top-7 left-1 flex items-center w-8 h-8 text-gray-400"  fill="currentColor"
+                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+            </svg>
+
         {{ form_row(registrationForm.email) }}
+        </div>
+        <div class="relative">
+            <svg class="absolute top-7 left-1 flex items-center w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
+                 stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            label: 'Mot de passe'
         }) }}
+        </div>
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit"
-                class="mt-8 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-            Inscription
-        </button>
+        <div class="mt-10 flex justify-center mx-auto">
+
+            <button class="w-1/2  text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 rounded-lg text-md font-semibold px-5 py-2.5 text-center mr-2 mb-2"
+                    type="submit">
+                S'inscrire
+            </button>
+        </div>
         {{ form_end(registrationForm) }}
     </div>
 {% endblock %}

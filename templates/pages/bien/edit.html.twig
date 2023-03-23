@@ -1,53 +1,64 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Agence Oti modifier un bien {% endblock %}
 
 
 {% block body %}
-    <h1 class="font-bold text-3xl mb-10 text-center">Edition d'un bien</h1>
+    <h1 class="font-bold text-3xl my-5 text-center">Edition d'un bien</h1>
     <div class="w-3/4 mx-auto shadow-2xl p-8 rounded-xl">
 
         {{ form_start(form) }}
+        <div class="">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+            <span class="text-red-700">{{ form_errors(form.description) }}</span>
+        </div>
         <div class="flex justify-between items-center">
             <div class="w-1/2 mx-2">
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description) }}
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price) }}
+                <span class="text-red-700">{{ form_errors(form.price) }}</span>
             </div>
             <div class="block w-1/2 mx-2">
                 {{ form_label(form.nb_pieces) }}
                 {{ form_widget(form.nb_pieces) }}
+                <span class="text-red-700">{{ form_errors(form.nb_pieces) }}</span>
             </div>
         </div>
         <div class="block my-5">
             <div class=" my-5">
                 {{ form_label(form.autres) }}
                 {{ form_widget(form.autres) }}
+                <span class="text-red-700">{{ form_errors(form.autres) }}</span>
             </div>
 
             {{ form_label(form.adresse) }}
             {{ form_widget(form.adresse) }}
+            <span class="text-red-700">{{ form_errors(form.adresse) }}</span>
 
         </div>
         <div class="flex justify-between items-center">
             <div class="w-1/2 mx-2">
                 {{ form_label(form.codePostal) }}
                 {{ form_widget(form.codePostal) }}
+                <span class="text-red-700">{{ form_errors(form.codePostal) }}</span>
             </div>
             <div class="block w-1/2 mx-2">
                 {{ form_label(form.ville) }}
                 {{ form_widget(form.ville) }}
+                <span class="text-red-700">{{ form_errors(form.ville) }}</span>
             </div>
         </div>
         <div class="flex justify-between items-center mt-4">
             <div class="w-1/2 mx-2">
                 {{ form_label(form.type) }}
                 {{ form_widget(form.type) }}
-                {{ form_errors(form.type) }}
+                <span class="text-red-700">{{ form_errors(form.type) }}</span>
             </div>
             <div class="w-1/2 mx-2">
                 {{ form_label(form.category, 'Catégorie') }}
                 {{ form_widget(form.category) }}
-                {{ form_errors(form.category) }}
+                <span class="text-red-700">{{ form_errors(form.category) }}</span>
             </div>
         </div>
         <div class="mt-5">
@@ -63,7 +74,8 @@
             <div class="grid grid-cols-4 gap-4 ">
                 {% for image in bien.images %}
                     <div class="relative">
-                        <a href="{{ path('image.delete', {id: image.id}) }}" data-delete class="bg-red-700 text-white text-center w-6 h-6 rounded-full absolute top-0 right-0">X</a>
+                        <a href="{{ path('image.delete', {id: image.id}) }}" data-delete
+                           class="bg-red-700 text-white text-center w-6 h-6 rounded-full absolute top-0 right-0">X</a>
                         <img src="{{ asset('/uploads/'~image.name) }}" alt="{{ image.name }}" class="w-full h-full">
                     </div>
                 {% endfor %}
@@ -73,42 +85,42 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
-    window.onload = () => {
-        // Gestion des boutons "Supprimer"
-        let links = document.querySelectorAll("[data-delete]")
+    <script>
+        window.onload = () => {
+            // Gestion des boutons "Supprimer"
+            let links = document.querySelectorAll("[data-delete]")
 
-        // On boucle sur links
-        for(link of links){
-            // On écoute le clic
-            link.addEventListener("click", function(e){
-                // On empêche la navigation
-                e.preventDefault()
+            // On boucle sur links
+            for (link of links) {
+                // On écoute le clic
+                link.addEventListener("click", function (e) {
+                    // On empêche la navigation
+                    e.preventDefault()
 
-                // On demande confirmation
-                if(confirm("Voulez-vous supprimer cette image ?")){
-                    // On envoie une requête Ajax vers le href du lien avec la méthode DELETE
-                    fetch(this.getAttribute("href"), {
-                        method: "DELETE",
-                        headers: {
-                            "X-Requested-With": "XMLHttpRequest",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({"_token": this.dataset.token})
-                    }).then(
-                        // On récupère la réponse en JSON
-                        response => response.json()
-                    ).then(data => {
-                        if(data.success)
-                            this.parentElement.remove()
-                        else
-                            alert(data.error)
-                    }).catch(e => alert(e))
-                }
-            })
+                    // On demande confirmation
+                    if (confirm("Voulez-vous supprimer cette image ?")) {
+                        // On envoie une requête Ajax vers le href du lien avec la méthode DELETE
+                        fetch(this.getAttribute("href"), {
+                            method: "DELETE",
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({"_token": this.dataset.token})
+                        }).then(
+                            // On récupère la réponse en JSON
+                            response => response.json()
+                        ).then(data => {
+                            if (data.success)
+                                this.parentElement.remove()
+                            else
+                                alert(data.error)
+                        }).catch(e => alert(e))
+                    }
+                })
+            }
         }
-    }
 
 
-</script>
+    </script>
 {% endblock %}

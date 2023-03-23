@@ -58,6 +58,9 @@ class Bien
     #[ORM\ManyToOne(inversedBy: 'biens')]
     private ?Category $category = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $price = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -225,6 +228,18 @@ class Bien
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

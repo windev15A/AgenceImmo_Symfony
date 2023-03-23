@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OTI - Recherche{% endblock %}
+
+
+{% block body %}
+
+
+    <div class="container ">
+
+        <h1 class="my-5 text-center text-3xl">Notre catalogue</h1>
+        <div class="block md:flex md:justify-around">
+            <div class="bg-teal-400 px-4 py-2 md:w-1/4 rounded-xl shadow-2xl">
+                <div id="search">
+
+                    {{ form_start(form) }}
+                    <span class="text-md font-semibold mb-2">{{ form_label(form.q) }}</span>
+                    {{ form_widget(form.q) }}
+                    <span class="text-md font-semibold mb-2">{{ form_label(form.ville) }}</span>
+                    {{ form_widget(form.ville) }}
+                    <h4 class="mt-3">Prix</h4>
+                    <div class="flex justify-between items-center my-2">
+                    <span class="text-md font-semibold mb-2 mr-2">{{ form_label(form.priceMin) }}
+                    </span>
+                        {{ form_widget(form.priceMin) }}
+
+
+                        <span class="text-md font-semibold mb-2 mx-2">{{ form_label(form.priceMax) }}
+                    </span>
+                        {{ form_widget(form.priceMax) }}
+                    </div>
+                    <h4 class="mt-3">Surfaces</h4>
+                    <div class="flex justify-between items-center my-2">
+
+                    <span class="text-md font-semibold mb-2 mr-2">{{ form_label(form.surfaceMin) }}
+                    </span>
+                        {{ form_widget(form.surfaceMin) }}
+                        <span class="text-md font-semibold mb-2 mx-2">{{ form_label(form.surfaceMax) }}
+                    </span>
+                        {{ form_widget(form.surfaceMax) }}
+                    </div>
+                    <div class="mt-2">
+
+                            <span class="text-md font-semibold mb-2">{{ form_label(form.categories) }}
+                            </span>
+                        {{ form_widget(form.categories) }}
+                    </div>
+                    <div class="mt-2">
+
+                        <span class="text-md font-semibold mb-2"> {{ form_label(form.types) }}</span>
+
+                        {{ form_widget(form.types) }}
+                    </div>
+
+                    <div>
+
+                        {{ form_widget(form.save) }}
+
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
+            <div class="md:w-2/3 bg-gray-200 px-5 py-2 rounded-xl shadow-2xl" id="card">
+                <h3>Nombre de biens trouvé {{ biens |length }}</h3>
+                {% if biens |length > 0 %}
+                    <div data-aos="fade-up" data-aos-anchor-placement="top-bottom"
+                         class="mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        {% for bien in biens %}
+                            {% set img = bien.getImages() |first %}
+                            <div data-aos="fade-left"
+                                 class="rounded overflow-hidden shadow-lg hover:scale-110 hover:bg-teal-200 hover:transition cursor-move duration-100">
+
+                                {% if img %}
+                                    <img class="w-full h-40" src="{{ asset('uploads/'~img.getName() ) }}"
+                                         alt="Mountain">
+                                {% else %}
+                                    <img class="w-full h-40" src="{{ asset('images/back.jpg' ) }}" alt="Mountain">
+                                {% endif %}
+                                <div class="px-6 py-4">
+                                    <div class="font-bold text-xl mb-2">{{ bien.description~' '~ bien.id }}</div>
+                                    <ul>
+                                        <li class="text-gray-600 text-base">Nombre de piéces : {{ bien.nbPieces }}</li>
+                                        <li class="text-gray-600 text-base">Surface : {{ bien.surface }} m²</li>
+                                        <li class="text-gray-600 text-base">Ville : {{ bien.ville }}</li>
+                                        <li class="text-gray-600 text-base">Nombre de piéces : {{ bien.nbPieces }}</li>
+
+                                    </ul>
+                                </div>
+                                <div class="px-6 pt-4 pb-2 bg-teal-500 flex justify-between items-center">
+                                    <div class="h-8 w-8">
+                                        <a href="{{ path('bien.show', {id: bien.id}) }}">
+                                            <svg fill="none" stroke="currentColor" stroke-width="1.5"
+                                                 viewBox="0 0 24 24"
+                                                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="bg-green-400 px-2 rounded">
+                                        <p class="text-white font-semibold">{{ bien.getCategory() }}</p>
+                                    </div>
+                                    <div class="h-8 w-8 text-white">
+                                        <a href="{{ path('bien.like', {id: bien.id}) }}">
+                                            {% if bien.id in favorites %}
+                                                {# ------- Coeur plein ----- -#}
+                                                <svg class="text-red-900" fill="currentColor" viewBox="0 0 24 24"
+                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"></path>
+                                                </svg>
+                                            {% else %}
+                                                <svg fill="none" stroke="currentColor" stroke-width="1.5"
+                                                     viewBox="0 0 24 24"
+                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"></path>
+                                                </svg>
+                                            {% endif %}
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+                {% else %}
+                    <div class="flex justify-center items-center mt-24 text-center text-red-600">
+                        <div class="text-center">
+                            <p class=" text-4xl ">Aucun bien ne correspond a votre recherche</p>
+                            <svg class="mx-auto mt-20 w-40 h-40" fill="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 00-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 01-.189-.866c0-.298.059-.605.189-.866zm-4.34 7.964a.75.75 0 01-1.061-1.06 5.236 5.236 0 013.73-1.538 5.236 5.236 0 013.695 1.538.75.75 0 11-1.061 1.06 3.736 3.736 0 00-2.639-1.098 3.736 3.736 0 00-2.664 1.098z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="Page navigation example mt-10 text-center">
+                    {{ knp_pagination_render(biens) }}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        window.addEventListener('scroll', function () {
+            let myDiv = document.getElementById("search");
+            if (window.pageYOffset < 1200) {
+                myDiv.style.paddingTop = window.pageYOffset + "px";
+                myDiv.style.transition = 'transform 0.5s'
+            }
+        });
+
+    </script>
+{% endblock %}

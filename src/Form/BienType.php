@@ -35,6 +35,13 @@ class BienType extends AbstractType
                     'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                 ]
             ])
+            ->add('price', NumberType::class, [
+                'required' => false,
+                'label' => 'Prix',
+                'attr' => [
+                    'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                ]
+            ])
             ->add('autres', ChoiceType::class, [
 
                 'label' => "Plus d'options",
@@ -51,28 +58,28 @@ class BienType extends AbstractType
                 'multiple' => true
 
             ])
-            ->add('adresse', TextType::class,[
+            ->add('adresse', TextType::class, [
                 'required' => false,
                 'label' => 'Adresse',
                 'attr' => [
                     'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                 ]
             ])
-            ->add('codePostal', TextType::class,[
+            ->add('codePostal', TextType::class, [
                 'required' => false,
                 'label' => 'code postal',
                 'attr' => [
                     'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                 ]
             ])
-            ->add('ville', TextType::class,[
+            ->add('ville', TextType::class, [
                 'required' => false,
                 'label' => 'ville',
                 'attr' => [
                     'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                 ]
             ])
-            ->add('type', EntityType::class,[
+            ->add('type', EntityType::class, [
                 'attr' => [
                     'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                 ],
@@ -80,7 +87,7 @@ class BienType extends AbstractType
                 'choice_label' => 'libelle',
 
             ])
-            ->add('category', EntityType::class,[
+            ->add('category', EntityType::class, [
                 'attr' => [
                     'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                 ],
@@ -88,7 +95,7 @@ class BienType extends AbstractType
                 'choice_label' => 'label',
 
             ])
-            ->add('images', FileType::class,[
+            ->add('images', FileType::class, [
                 'label' => false,
                 'multiple' => true,
                 'mapped' => false,

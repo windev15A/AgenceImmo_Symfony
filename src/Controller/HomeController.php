@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Bien;
 use App\Repository\BienRepository;
 use App\Services\Favorite;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 

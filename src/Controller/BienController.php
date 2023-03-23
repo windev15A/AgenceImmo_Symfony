@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ *
+ */
 #[Route('/admin')]
 class BienController extends AbstractController
 {
@@ -30,10 +33,14 @@ class BienController extends AbstractController
         Request            $request
     ): Response
     {
+
         $biens = $paginator->paginate(
             $repository->findAll(),
             $request->query->getInt('page', 1),
-            10
+            20,[
+                'defaultSortFieldName'      => 'createdAt',
+                'defaultSortDirection' => 'desc'
+            ]
         );
 
         return $this->render('pages/bien/index.html.twig', [
@@ -149,7 +156,6 @@ class BienController extends AbstractController
                 $bien->removeImage($image);
                 $imgctrl->delete($image, $manager);
             }
-
             $manager->remove($bien);
             $manager->flush();
             $this->addFlash('success', 'Le bien à été supprimer avec succés');
