@@ -2,12 +2,12 @@
 
 namespace App\Data;
 
-use Doctrine\ORM\Mapping as ORM;
 
+/**
+ *
+ */
 class FilterData
 {
-
-
     /**
      * @var string|null
      */

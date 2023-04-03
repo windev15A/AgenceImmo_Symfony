@@ -65,7 +65,11 @@ class BienRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function getData($limit = 5)
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getData(int $limit = 5): mixed
     {
         return $this->createQueryBuilder('b')
             ->orderBy('b.created_at', 'desc')
@@ -80,8 +84,6 @@ class BienRepository extends ServiceEntityRepository
      */
     public function searchBien(FilterData $filter):array
     {
-
-
         try {
             $query = $this->createQueryBuilder('b')
                 ->select("b", "t", "c")

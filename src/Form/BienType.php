@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Adresse;
 use App\Entity\Bien;
 use App\Entity\Category;
 use App\Entity\Type;
@@ -17,6 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ *
+ */
 class BienType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

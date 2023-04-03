@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ *
+ */
 #[Route('/admin/type')]
 class TypeController extends AbstractController
 {
@@ -44,7 +47,7 @@ class TypeController extends AbstractController
             return $this->redirectToRoute('app_type_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('pages/type/new.html.twig', [
+        return $this->render('pages/type/new.html.twig', [
             'type' => $type,
             'form' => $form,
         ]);
@@ -63,7 +66,7 @@ class TypeController extends AbstractController
             return $this->redirectToRoute('app_type_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('pages/type/edit.html.twig', [
+        return $this->render('pages/type/edit.html.twig', [
             'type' => $type,
             'form' => $form,
         ]);
