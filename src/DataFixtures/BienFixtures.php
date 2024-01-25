@@ -2,12 +2,14 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Adresse;
+
 use App\Entity\Bien;
-use App\Repository\AdresseRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * class Bien fixtures
+ */
 class BienFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void

@@ -9,7 +9,7 @@
             <div class="p-2 mb-2" id="img_principal">
                 <img onclick="display('{{ asset('images/back.jpg') }}')" src="{{ asset('images/back.jpg') }}" alt="image back">
             </div>
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center flex-wrap">
                 {% for image in bien.images %}
                     <img onclick="display('{{ asset('uploads/'~image.getName() ) }}')" class="w-40 h-40 "
                          src="{{ asset('uploads/'~image.getName() ) }}"

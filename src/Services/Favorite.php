@@ -6,6 +6,9 @@ use App\Repository\BienRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+/**
+ *
+ */
 class Favorite
 {
 
@@ -20,14 +23,18 @@ class Favorite
     }
 
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function addToFavorite(int $id): void
     {
         $favorites = $this->session->get('favorites', []);
         if (!in_array($id, $favorites)) {
             $favorites[] = $id;
-        }else{
-            $search = array_search($id,$favorites, true);
-            if($search !== false){
+        } else {
+            $search = array_search($id, $favorites, true);
+            if ($search !== false) {
                 unset($favorites[$search]);
             }
 
@@ -36,7 +43,11 @@ class Favorite
     }
 
 
-    public function getAllFavorites(){
+    /**
+     * @return array
+     */
+    public function getAllFavorites(): array
+    {
         return $this->session->get('favorites', []);
     }
 

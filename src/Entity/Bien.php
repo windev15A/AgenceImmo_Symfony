@@ -61,6 +61,7 @@ class Bien
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -243,4 +244,11 @@ class Bien
 
         return $this;
     }
+
+
+
+
+
+
+
 }
